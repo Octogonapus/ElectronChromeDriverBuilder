@@ -42,6 +42,8 @@ platforms = [
 
 mktempdir() do temp_path
     for platform in platforms
+        @info "Building for $platform"
+
         if platform isa Windows && arch(platform) == :x86_64
             download_url = "https://github.com/electron/electron/releases/download/v$version/chromedriver-v$version-win32-x64.zip"
         elseif platform isa Windows && arch(platform) == :i686
@@ -61,7 +63,6 @@ mktempdir() do temp_path
         end
 
         download_filename = joinpath(Path(temp_path), Path(basename(Path(URI(download_url).path))))
-
         download(download_url, download_filename)
 
         product_hash = create_artifact() do artifact_dir
@@ -83,9 +84,7 @@ mktempdir() do temp_path
         end
 
         archive_filename = "$pkgname-$version+$(build)-$(triplet(platform)).tar.gz"
-
         download_hash = archive_artifact(product_hash, joinpath(build_path, archive_filename))
-
         escaped_artifact_version = URIParser.escape(string(version) * "+" * string(build))
         bind_artifact!(
             artifact_toml,
