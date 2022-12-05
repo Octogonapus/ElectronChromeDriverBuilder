@@ -59,6 +59,7 @@ mktempdir() do temp_path
         elseif platform isa Linux && arch(platform) == :aarch64
             download_url = "https://github.com/electron/electron/releases/download/v$version/chromedriver-v$version-linux-arm64.zip"
         else
+            @info "Skipping $platform"
             continue
         end
 
