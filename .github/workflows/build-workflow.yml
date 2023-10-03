@@ -15,7 +15,7 @@ jobs:
 
       - uses: julia-actions/setup-julia@v1
         with:
-          version: 1.8
+          version: 1.9
 
       - name: Instantiate environment
         run: julia --project --color=yes -e 'using Pkg; Pkg.instantiate()'
